@@ -4,8 +4,9 @@ import com.delivery.springfood.models.Client;
 import org.springframework.stereotype.Component;
 
 @Component
-public class NotifierEmail {
+public class NotifierEmail implements Notifier{
 
+    @Override
     public void notify(Client client, String message) {
         System.out.printf("Notificando %s através do email %s: %s\n", client.getName(), client.getEmail(), message);
     }

@@ -6,10 +6,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class ActivationClientService {
 
-    private NotifierEmail notifierEmail;
+    private final Notifier notifier;
+
+    public ActivationClientService(Notifier notifier) {
+        this.notifier = notifier;
+    }
 
     public void activate(Client client) {
         client.activate();
-        notifierEmail.notify(client, "Seu cadastro no sistema está ativo!");
+        notifier.notify(client, "Seu cadastro no sistema está ativo!");
     }
 }
