@@ -2,6 +2,7 @@ package com.delivery.springfood.controllers;
 
 import com.delivery.springfood.models.Client;
 import com.delivery.springfood.services.ActivationClientService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -9,11 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class FirstController {
 
-    private final ActivationClientService activationClientService;
-
-    public FirstController(ActivationClientService activationClientService) {
-        this.activationClientService = activationClientService;
-    }
+    @Autowired
+    private ActivationClientService activationClientService;
 
     @GetMapping("/hello")
     @ResponseBody
