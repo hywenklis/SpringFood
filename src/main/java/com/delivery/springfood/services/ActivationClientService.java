@@ -4,14 +4,19 @@ import com.delivery.springfood.models.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class ActivationClientService {
 
     @Autowired
-    private Notifier notifier;
+    private List<Notifier> notifiers;
 
     public void activate(Client client) {
         client.activate();
-        notifier.notify(client, "Seu cadastro no sistema está ativo!");
+
+        for (Notifier notifier : notifiers) {
+            notifier.notify(client, "Seu cadastro no sistema está ativo!");
+        }
     }
 }
