@@ -1,8 +1,10 @@
 package com.delivery.springfood.services;
 
 import com.delivery.springfood.models.Client;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
+@Primary
 @Component
 public class NotifierEmail implements Notifier{
 
