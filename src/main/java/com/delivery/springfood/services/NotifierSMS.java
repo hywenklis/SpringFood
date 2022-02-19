@@ -1,8 +1,10 @@
 package com.delivery.springfood.services;
 
 import com.delivery.springfood.models.Client;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+@Qualifier("normal")
 @Component
 public class NotifierSMS implements Notifier {
     @Override
