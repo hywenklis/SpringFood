@@ -1,14 +1,15 @@
 package com.delivery.springfood.services;
 
+import com.delivery.springfood.config.NotifierType;
+import com.delivery.springfood.enums.TypeUrgency;
 import com.delivery.springfood.models.Client;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ActivationClientService {
 
-    @Qualifier("urgent")
+    @NotifierType(TypeUrgency.URGENCY)
     @Autowired
     private Notifier notifier;
 

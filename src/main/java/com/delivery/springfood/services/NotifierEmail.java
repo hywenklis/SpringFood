@@ -1,10 +1,11 @@
 package com.delivery.springfood.services;
 
+import com.delivery.springfood.config.NotifierType;
+import com.delivery.springfood.enums.TypeUrgency;
 import com.delivery.springfood.models.Client;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-@Qualifier("urgent")
+@NotifierType(TypeUrgency.URGENCY)
 @Component
 public class NotifierEmail implements Notifier{
 
