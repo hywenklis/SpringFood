@@ -1,0 +1,4 @@
+notifier:
+  email:
+    host-server: smtp.springfood.com.br
+    port-server: 25
