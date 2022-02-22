@@ -1,4 +1,0 @@
-notifier:
-  email:
-    host-server: smtp.springfood.local
-    port-server: 25
