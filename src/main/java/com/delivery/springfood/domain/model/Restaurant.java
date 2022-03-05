@@ -1,15 +1,15 @@
 package com.delivery.springfood.domain.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
 public class Restaurant {
+
     @Id
     @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
