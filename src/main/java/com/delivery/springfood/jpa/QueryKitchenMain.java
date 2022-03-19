@@ -17,6 +17,16 @@ public class QueryKitchenMain {
                 .run(args);
 
         RegisterKitchen registerKitchen = applicationContext.getBean(RegisterKitchen.class);
+
+        Kitchen kitchen1 = new Kitchen();
+        Kitchen kitchen2 = new Kitchen();
+
+        kitchen1.setName("Brasileira");
+        kitchen2.setName("Japonesa");
+
+        registerKitchen.add(kitchen1);
+        registerKitchen.add(kitchen2);
+
         List<Kitchen> kitchens = registerKitchen.listAll();
         for (Kitchen kitchen: kitchens) {
             System.out.println(kitchen.getName());
