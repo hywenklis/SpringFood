@@ -26,4 +26,11 @@ public class RegisterKitchen {
     public Kitchen search(Long id) {
         return entityManager.find(Kitchen.class, id);
     }
+
+    @Transactional
+    public String remove(Kitchen kitchen) {
+        kitchen = search(kitchen.getId());
+        entityManager.remove(kitchen);
+        return kitchen.getName();
+    }
 }
