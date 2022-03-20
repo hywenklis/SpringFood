@@ -1,32 +1,37 @@
-package com.delivery.springfood.jpa;
+package com.delivery.springfood.infrastructure.repository;
 
 import com.delivery.springfood.domain.model.Kitchen;
-import org.springframework.stereotype.Component;
+import com.delivery.springfood.domain.repository.KitchenRepository;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Component
-public class RegisterKitchen {
+@Repository
+public class KitchenRepositoryImpl implements KitchenRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Override
     public List<Kitchen> listAll() {
         return entityManager.createQuery("from Kitchen", Kitchen.class).getResultList();
     }
 
+    @Override
     @Transactional
     public Kitchen save(Kitchen kitchen) {
         return entityManager.merge(kitchen);
     }
 
+    @Override
     public Kitchen search(Long id) {
         return entityManager.find(Kitchen.class, id);
     }
 
+    @Override
     @Transactional
     public String remove(Kitchen kitchen) {
         kitchen = search(kitchen.getId());
