@@ -20,19 +20,25 @@ public class QueryKitchenMain {
 
         Kitchen kitchen1 = new Kitchen();
         Kitchen kitchen2 = new Kitchen();
+        Kitchen kitchen3 = new Kitchen();
 
         kitchen1.setName("Brasileira");
         kitchen2.setName("Japonesa");
 
-        registerKitchen.add(kitchen1);
-        registerKitchen.add(kitchen2);
-
-        Kitchen search = registerKitchen.search(1L);
-        System.out.println("Cozinha retornada apatir do método de find ID: " + search.getName());
+        registerKitchen.save(kitchen1);
+        registerKitchen.save(kitchen2);
 
         List<Kitchen> kitchens = registerKitchen.listAll();
         for (Kitchen kitchen: kitchens) {
             System.out.println(kitchen.getName());
         }
+
+        Kitchen search = registerKitchen.search(1L);
+        System.out.println("Cozinha retornada apatir do método de find ID: " + search.getName());
+
+        kitchen3.setId(1L);
+        kitchen3.setName("ITALIANA");
+        registerKitchen.save(kitchen3);
+        System.out.println("Atualizando uma cozinha existente apartir de um determinado ID: " + kitchen3.getName());
     }
 }
