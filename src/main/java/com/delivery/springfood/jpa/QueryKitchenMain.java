@@ -40,5 +40,7 @@ public class QueryKitchenMain {
         kitchen3.setName("ITALIANA");
         registerKitchen.save(kitchen3);
         System.out.println("Atualizando uma cozinha existente apartir de um determinado ID: " + kitchen3.getName());
+
+        System.out.println("Removendo: " + registerKitchen.remove(kitchen3));
     }
 }
