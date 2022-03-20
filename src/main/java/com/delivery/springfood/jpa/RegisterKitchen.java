@@ -22,4 +22,8 @@ public class RegisterKitchen {
     public Kitchen add(Kitchen kitchen) {
         return entityManager.merge(kitchen);
     }
+
+    public Kitchen search(Long id) {
+        return entityManager.find(Kitchen.class, id);
+    }
 }

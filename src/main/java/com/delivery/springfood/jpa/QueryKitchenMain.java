@@ -27,6 +27,9 @@ public class QueryKitchenMain {
         registerKitchen.add(kitchen1);
         registerKitchen.add(kitchen2);
 
+        Kitchen search = registerKitchen.search(1L);
+        System.out.println("Cozinha retornada apatir do método de find ID: " + search.getName());
+
         List<Kitchen> kitchens = registerKitchen.listAll();
         for (Kitchen kitchen: kitchens) {
             System.out.println(kitchen.getName());
