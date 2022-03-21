@@ -7,6 +7,7 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class QueryRestaurantMain {
@@ -25,6 +26,9 @@ public class QueryRestaurantMain {
         restaurant1.setName("Restaurante Brasileiro");
         restaurant2.setName("Restaurante Japones");
         restaurant3.setName("Restaurante Italiano");
+        restaurant1.setFreightRate(new BigDecimal(7.50));
+        restaurant2.setFreightRate(new BigDecimal(7.50));
+        restaurant3.setFreightRate(new BigDecimal(7.50));
 
         restaurantRepository.save(restaurant1);
         restaurantRepository.save(restaurant2);
