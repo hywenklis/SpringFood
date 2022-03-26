@@ -24,7 +24,7 @@ public class QueryRestaurantMain {
         Restaurant restaurant3 = new Restaurant();
 
         restaurant1.setName("Restaurante Brasileiro");
-        restaurant2.setName("Restaurante Japones");
+        restaurant2.setName("Restaurante Japonês");
         restaurant3.setName("Restaurante Italiano");
         restaurant1.setFreightRate(new BigDecimal(7.50));
         restaurant2.setFreightRate(new BigDecimal(7.50));
@@ -43,7 +43,7 @@ public class QueryRestaurantMain {
         System.out.println("Restaurante retornado apatir do método de find ID: " + search.getName());
 
         restaurant3.setId(1L);
-        restaurant3.setName("Restaurante Frânces");
+        restaurant3.setName("Restaurante Francês");
         restaurantRepository.save(restaurant3);
         System.out.println("Atualizando um restaurante existente apartir de um determinado ID: " + restaurant3.getName());
 

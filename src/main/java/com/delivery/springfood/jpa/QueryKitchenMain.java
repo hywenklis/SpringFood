@@ -35,7 +35,7 @@ public class QueryKitchenMain {
         }
 
         Kitchen search = kitchenRepository.search(1L);
-        System.out.println("Cozinha retornada apatir do método de find ID: " + search.getName());
+        System.out.println("Cozinha retornada apartir do método de find ID: " + search.getName());
 
         kitchen3.setId(1L);
         kitchen3.setName("ITALIANA");
