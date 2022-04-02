@@ -1,15 +1,14 @@
 package com.delivery.springfood.api.controller;
 
-import java.util.List;
-
 import com.delivery.springfood.domain.model.Kitchen;
 import com.delivery.springfood.domain.repository.KitchenRepository;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/kitchens")
@@ -21,5 +20,10 @@ public class KitchenController {
     @GetMapping
     public List<Kitchen> list() {
         return kitchenRepository.listAll();
+    }
+
+    @GetMapping("/{id}")
+    public Kitchen search(@PathVariable Long id) {
+        return kitchenRepository.search(id);
     }
 }
