@@ -9,3 +9,8 @@ INSERT INTO payment (format_payment) VALUES ('DÉBITO')
 INSERT INTO payment (format_payment) VALUES ('CRÉDITO')
 INSERT INTO payment (format_payment) VALUES ('PIX')
 INSERT INTO payment (format_payment) VALUES ('BOLETO BANCÁRIO')
+
+INSERT INTO federative_unit (name) VALUES ('ALAGOAS')
+INSERT INTO federative_unit (name) VALUES ('SÃO PAULO')
+INSERT INTO federative_unit (name) VALUES ('RIO GRANDE DO NORTE')
+INSERT INTO federative_unit (name) VALUES ('RIO DE JANEIRO')
