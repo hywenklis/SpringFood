@@ -6,15 +6,16 @@ name: Java CI with Maven - Build, Test and Deploy
 # configuramos para rodar apenas quando houver um push na master
 on:
   push:
-    branches: [ main ]
+    branches:
+      - master
   pull_request:
-    branches: [ main ]
+    types: [opened, synchronize, reopened]
 
 jobs:
   # `build` é o nome do job
   build:
     # nome para exibir no repositório
-    name: Build, Test and Deploy
+    name: Build and Test
 
     # utilizamos uma instância do ubuntu como runner
     runs-on: ubuntu-latest
@@ -31,8 +32,23 @@ jobs:
           java-version: 17
           architecture: x64
 
+      # Executando o docker-compose da aplicação
       - name: Docker compose
         run: docker-compose up -d
+
+      # Configuração para o SonarCloud executar e fazer a análise do código
+      - name: Cache SonarCloud packages
+          uses: actions/cache@v2
+          with:
+            path: ~/.sonar/cache
+            key: ${{ runner.os }}-sonar
+            restore-keys: ${{ runner.os }}-sonar
+
+            - name: Build and analyze
+                env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+                  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=hywenklis_SpringFood
 
       # aqui podemos configurar um cache para cachear as dependências do projeto,
       # isso vai permitir que as próximas execuções do workflow sejam mais rápidas
