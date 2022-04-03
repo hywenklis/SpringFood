@@ -32,7 +32,6 @@ jobs:
           architecture: x64
 
       - name: Docker compose
-      - uses: actions/docker@v2
         run: docker-compose up -d
 
       # aqui podemos configurar um cache para cachear as dependências do projeto,
