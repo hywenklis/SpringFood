@@ -8,6 +8,10 @@ on:
   push:
     branches:
       - master
+      - realease
+      - feature
+      - fix
+      - hotfix
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -28,6 +32,7 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
           distribution: 'adopt'
           java-version: 17
           architecture: x64
