@@ -7,7 +7,7 @@ name: Java CI with Maven - Build, Test and Deploy
 on:
   push:
     branches:
-      - 'main'
+      - main
       - 'realease/**'
       - 'feature/**'
       - 'fix/**'
