@@ -8,13 +8,20 @@ on:
   push:
     branches:
       - main
-      - 'realease/**'
-      - 'feature/**'
-      - 'fix/**'
-      - 'hotfix/**'
+      - develop
+      - realease/*
+      - feature/*
+      - fix/*
+      - hotfix/*
   pull_request:
-    types: [opened, synchronize, reopened]
-
+    types: [opened, edited, synchronize, reopened]
+    branches:
+      - main
+      - develop
+      - realease/*
+      - feature/*
+      - fix/*
+      - hotfix/*
 jobs:
   # `build` é o nome do job
   build:
