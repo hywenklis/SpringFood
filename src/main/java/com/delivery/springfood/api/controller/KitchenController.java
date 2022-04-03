@@ -25,7 +25,6 @@ public class KitchenController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Kitchen> search(@PathVariable Long id) {
-
         Kitchen kitchen = kitchenRepository.search(id);
 
         if (kitchen != null) {

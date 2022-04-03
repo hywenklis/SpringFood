@@ -25,7 +25,6 @@ public class FederativeUnitController {
 
     @GetMapping("/{id}")
     public ResponseEntity<FederativeUnit> search(@PathVariable Long id) {
-
         FederativeUnit federativeUnit = federativeUnitRepository.search(id);
 
         if (federativeUnit != null) {
