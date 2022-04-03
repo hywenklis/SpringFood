@@ -65,19 +65,3 @@ jobs:
         with:
           name: Test Coverage Report
           path: coverage-report
-
-      # fazemos construção e publicação do artefato construído
-      - name: Maven Build and Publish
-        run: mvn -B deploy
-        env:
-          # com estamos utilizado o Github Artifact, passamos o token do repositório para fazer upload
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # copiamos o artefato construído para uma pasta específica
-      - run: mkdir dist && cp target/*.jar dist
-
-      # aqui fazemos o publicação do artefato para que possa ser baixado nos detalhes de execução do workflow
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Package
-          path: dist
