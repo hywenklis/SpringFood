@@ -34,7 +34,6 @@ jobs:
       # Executando o docker-compose da aplicação
       - name: Docker compose
         run: docker-compose up -d
-
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
