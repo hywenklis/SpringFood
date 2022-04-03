@@ -6,22 +6,9 @@ name: Java CI with Maven - Build, Test and Deploy
 # configuramos para rodar apenas quando houver um push na master
 on:
   push:
-    branches:
-      - main
-      - develop
-      - realease/*
-      - feature/*
-      - fix/*
-      - hotfix/*
+    branches: [ main ]
   pull_request:
-    types: [opened, edited, synchronize, reopened]
-    branches:
-      - main
-      - develop
-      - realease/*
-      - feature/*
-      - fix/*
-      - hotfix/*
+    branches: [ main ]
 jobs:
   # `build` é o nome do job
   build:
