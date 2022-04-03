@@ -7,10 +7,21 @@ name: Java CI with Maven - Build, Test and Deploy
 on:
   push:
     branches:
-      - master
+      - main
+      - develop
+      - realease/*
+      - feature/*
+      - fix/*
+      - hotfix/*
   pull_request:
-    types: [opened, synchronize, reopened]
-
+    types: [opened, edited, synchronize, reopened]
+    branches:
+      - main
+      - develop
+      - realease/*
+      - feature/*
+      - fix/*
+      - hotfix/*
 jobs:
   # `build` é o nome do job
   build:
@@ -28,6 +39,7 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
           distribution: 'adopt'
           java-version: 17
           architecture: x64
