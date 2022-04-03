@@ -7,11 +7,11 @@ name: Java CI with Maven - Build, Test and Deploy
 on:
   push:
     branches:
-      - main
-      - realease
-      - feature
-      - fix
-      - hotfix
+      - 'main'
+      - 'realease/**'
+      - 'feature/**'
+      - 'fix/**'
+      - 'hotfix/**'
   pull_request:
     types: [opened, synchronize, reopened]
 
