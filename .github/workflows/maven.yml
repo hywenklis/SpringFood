@@ -60,6 +60,8 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 17
+      - name: Docker compose
+        run: docker-compose up -d
       - name: Cache SonarCloud packages
         uses: actions/cache@v2
         with:
