@@ -8,18 +8,20 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]
+    types: [opened, synchronize, reopened]
 jobs:
   # `build` é o nome do job
-  build:
+  tests:
     # nome para exibir no repositório
-    name: Build and Test
+    name: Test
 
     # utilizamos uma instância do ubuntu como runner
     runs-on: ubuntu-latest
     steps:
       # utilizamos a action checkout para fazer o git clone no runner
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       # utilizamos a action setup-java para configurar a versão necessária do JDK
       - name: Set up JDK 17
@@ -27,7 +29,6 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 17
-          architecture: x64
 
       # aqui podemos configurar um cache para cachear as dependências do projeto,
       # isso vai permitir que as próximas execuções do workflow sejam mais rápidas
@@ -45,22 +46,43 @@ jobs:
       - name: Docker compose
         run: docker-compose up -d
 
-      # Excutando SonarCloud
+      # aqui apenas definimos o commando para executar no runner
+      - name: Maven Test
+        run: mvn test
+
+  # Excutando SonarCloud
+  sonar:
+    needs: tests
+    name: SonarCloud Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: 17
+      - name: Docker compose
+        run: docker-compose up -d
       - name: Cache SonarCloud packages
         uses: actions/cache@v2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Maven packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=hywenklis_SpringFood
-
-      # aqui apenas definimos o commando para executar no runner
-      - name: Maven Test
-        run: mvn test
 
       # aqui criamos a pasta para armazenar o relatório dos testes
       - run: mkdir coverage-report && cp -r target/site/jacoco/* coverage-report
@@ -77,3 +99,42 @@ jobs:
         with:
           name: Test Coverage Report
           path: coverage-report
+
+  #Build's job
+  build:
+    #Depends on sonar's job
+    needs: sonar
+    name: Build
+    #Run on Ubuntu using the latest version
+    runs-on: ubuntu-latest
+    steps:
+      #Check-out your repository under $GITHUB_WORKSPACE, so your workflow can access it
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      #Set up JDK 17
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: 17
+      #Set up Maven cache
+      - name: Cache Maven packages
+        #This action allows caching dependencies and build outputs to improve workflow execution time.
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      #Build the application using Maven
+      - name: Build with Maven
+        run: mvn -B package -DskipTests --file pom.xml
+      #Build the application using Maven
+      - name: Upload JAR
+        #This uploads artifacts from your workflow allowing you to share data between jobs and store data once a workflow is complete.
+        uses: actions/upload-artifact@v3
+        with:
+          #Set artifact name
+          name: artifact
+          #From this path
+          path: target/springfood-api-0.0.1-SNAPSHOT.jar
