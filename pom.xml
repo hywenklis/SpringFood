@@ -92,13 +92,13 @@
 				<version>0.8.7</version>
 				<executions>
 					<execution>
-						<id>jacoco-initialize</id>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
 					</execution>
+					<!-- attached to Maven test phase -->
 					<execution>
-						<id>jacoco-site</id>
+						<id>report</id>
 						<phase>test</phase>
 						<goals>
 							<goal>report</goal>
