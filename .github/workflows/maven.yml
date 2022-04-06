@@ -42,7 +42,7 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      # Executando o docker-compose da aplicação
+      #Executando o docker-compose da aplicação
       - name: Docker compose
         run: docker-compose up -d
 
