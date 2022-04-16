@@ -3,11 +3,9 @@ package com.delivery.springfood.api.controller;
 import com.delivery.springfood.domain.model.Kitchen;
 import com.delivery.springfood.domain.repository.KitchenRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +29,10 @@ public class KitchenController {
             return ResponseEntity.ok(kitchen);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<Kitchen> save(@RequestBody Kitchen kitchen) {
+        return new ResponseEntity<>(kitchenRepository.save(kitchen), HttpStatus.CREATED);
     }
 }
