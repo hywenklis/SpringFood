@@ -4,6 +4,7 @@ import com.delivery.springfood.domain.model.Kitchen;
 import com.delivery.springfood.domain.repository.KitchenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,5 +48,20 @@ public class KitchenController {
             return ResponseEntity.ok(search);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        try {
+            Kitchen kitchen = kitchenRepository.search(id);
+
+            if (kitchen != null) {
+                kitchenRepository.remove(kitchen);
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.notFound().build();
+        } catch (DataIntegrityViolationException d) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 }
