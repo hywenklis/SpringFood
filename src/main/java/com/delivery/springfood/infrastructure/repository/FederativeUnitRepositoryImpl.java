@@ -20,12 +20,12 @@ public class FederativeUnitRepositoryImpl implements FederativeUnitRepository {
     }
 
     @Override
-    public FederativeUnit search(Long id) {
+    public FederativeUnit search(final Long id) {
         return entityManager.find(FederativeUnit.class, id);
     }
 
     @Override
-    public FederativeUnit save(FederativeUnit federativeUnit) {
+    public FederativeUnit save(final FederativeUnit federativeUnit) {
         return entityManager.merge(federativeUnit);
     }
 

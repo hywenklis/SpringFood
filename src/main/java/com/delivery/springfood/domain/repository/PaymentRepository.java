@@ -1,16 +1,16 @@
 package com.delivery.springfood.domain.repository;
 
-import java.util.List;
-
 import com.delivery.springfood.domain.model.Payment;
+
+import java.util.List;
 
 public interface PaymentRepository {
     
     List<Payment> listAll();
 
-    Payment search(Long id);
+    Payment search(final Long id);
 
-    Payment save(Payment payment);
+    Payment save(final Payment payment);
 
-    String remove(Payment payment);
+    String remove(final Payment payment);
 }

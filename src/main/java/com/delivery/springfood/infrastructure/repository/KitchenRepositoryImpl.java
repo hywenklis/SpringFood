@@ -25,24 +25,23 @@ public class KitchenRepositoryImpl implements KitchenRepository {
 
     @Override
     @Transactional
-    public Kitchen save(Kitchen kitchen) {
+    public Kitchen save(final Kitchen kitchen) {
         return entityManager.merge(kitchen);
     }
 
     @Override
-    public Kitchen search(Long id) {
+    public Kitchen search(final Long id) {
         return entityManager.find(Kitchen.class, id);
     }
 
     @Override
     @Transactional
-    public String remove(Long id) {
+    public void remove(final Long id) {
         Kitchen kitchen = search(id);
 
         if (kitchen == null) {
             throw new EmptyResultDataAccessException(1);
         }
         entityManager.remove(kitchen);
-        return kitchen.getName();
     }
 }

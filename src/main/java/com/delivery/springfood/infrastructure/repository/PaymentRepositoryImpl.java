@@ -1,22 +1,19 @@
 package com.delivery.springfood.infrastructure.repository;
 
-import java.util.List;
+import com.delivery.springfood.domain.model.Payment;
+import com.delivery.springfood.domain.repository.PaymentRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-
-import com.delivery.springfood.domain.model.Payment;
-import com.delivery.springfood.domain.repository.PaymentRepository;
-
-import org.springframework.stereotype.Repository;
-
-import lombok.RequiredArgsConstructor;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class PaymentRepositoryImpl implements PaymentRepository{
-    
+public class PaymentRepositoryImpl implements PaymentRepository {
+
     @PersistenceContext
     private final EntityManager entityManager;
 
@@ -27,12 +24,12 @@ public class PaymentRepositoryImpl implements PaymentRepository{
 
     @Override
     @Transactional
-    public Payment save(Payment payment) {
+    public Payment save(final Payment payment) {
         return entityManager.merge(payment);
     }
 
     @Override
-    public Payment search(Long id) {
+    public Payment search(final Long id) {
         return entityManager.find(Payment.class, id);
     }
 

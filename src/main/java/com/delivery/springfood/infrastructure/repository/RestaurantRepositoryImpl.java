@@ -23,13 +23,13 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
     }
 
     @Override
-    public Restaurant search(Long id) {
+    public Restaurant search(final Long id) {
         return entityManager.find(Restaurant.class, id);
     }
 
     @Override
     @Transactional
-    public Restaurant save(Restaurant restaurant) {
+    public Restaurant save(final Restaurant restaurant) {
         return entityManager.merge(restaurant);
     }
 
