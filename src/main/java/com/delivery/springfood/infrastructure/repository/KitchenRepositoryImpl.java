@@ -3,6 +3,7 @@ package com.delivery.springfood.infrastructure.repository;
 import com.delivery.springfood.domain.model.Kitchen;
 import com.delivery.springfood.domain.repository.KitchenRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,8 +36,12 @@ public class KitchenRepositoryImpl implements KitchenRepository {
 
     @Override
     @Transactional
-    public String remove(Kitchen kitchen) {
-        kitchen = search(kitchen.getId());
+    public String remove(Long id) {
+        Kitchen kitchen = search(id);
+
+        if (kitchen == null) {
+            throw new EmptyResultDataAccessException(1);
+        }
         entityManager.remove(kitchen);
         return kitchen.getName();
     }
