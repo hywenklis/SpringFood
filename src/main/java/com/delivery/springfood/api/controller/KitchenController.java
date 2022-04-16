@@ -3,6 +3,7 @@ package com.delivery.springfood.api.controller;
 import com.delivery.springfood.domain.model.Kitchen;
 import com.delivery.springfood.domain.repository.KitchenRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,5 +35,17 @@ public class KitchenController {
     @PostMapping
     public ResponseEntity<Kitchen> save(@RequestBody Kitchen kitchen) {
         return new ResponseEntity<>(kitchenRepository.save(kitchen), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Kitchen> replace(@PathVariable Long id, @RequestBody Kitchen kitchen) {
+        Kitchen search = kitchenRepository.search(id);
+
+        if (search != null) {
+            BeanUtils.copyProperties(kitchen, search, "id");
+            kitchenRepository.save(search);
+            return ResponseEntity.ok(search);
+        }
+        return ResponseEntity.notFound().build();
     }
 }
