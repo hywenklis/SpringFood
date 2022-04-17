@@ -30,6 +30,7 @@ public class PaymentRepositoryImpl implements PaymentRepository {
     }
 
     @Override
+    @Transactional
     public void remove(Long id) {
         Payment payment = search(id);
 

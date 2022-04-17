@@ -35,6 +35,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
     }
 
     @Override
+    @Transactional
     public void remove(Long id) {
         Restaurant restaurant = search(id);
 

@@ -5,14 +5,17 @@ import com.delivery.springfood.domain.repository.FederativeUnitRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
 public class FederativeUnitRepositoryImpl implements FederativeUnitRepository {
 
+    @PersistenceContext
     private final EntityManager entityManager;
 
     @Override
@@ -26,11 +29,13 @@ public class FederativeUnitRepositoryImpl implements FederativeUnitRepository {
     }
 
     @Override
+    @Transactional
     public FederativeUnit save(final FederativeUnit federativeUnit) {
         return entityManager.merge(federativeUnit);
     }
 
     @Override
+    @Transactional
     public void remove(Long id) {
         FederativeUnit federativeUnit = search(id);
 

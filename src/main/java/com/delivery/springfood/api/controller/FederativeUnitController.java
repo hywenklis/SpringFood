@@ -1,13 +1,14 @@
 package com.delivery.springfood.api.controller;
 
+import com.delivery.springfood.domain.exception.EntityInUseException;
+import com.delivery.springfood.domain.exception.EntityNotFoundException;
 import com.delivery.springfood.domain.model.FederativeUnit;
-import com.delivery.springfood.domain.repository.FederativeUnitRepository;
+import com.delivery.springfood.domain.service.FederativeUnitService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,21 +16,50 @@ import java.util.List;
 @RequestMapping("/api/states")
 @RequiredArgsConstructor
 public class FederativeUnitController {
-    
-    private final FederativeUnitRepository federativeUnitRepository;
+
+    private final FederativeUnitService federativeUnitService;
 
     @GetMapping
     public List<FederativeUnit> list() {
-        return federativeUnitRepository.listAll();
+        return federativeUnitService.listAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<FederativeUnit> search(@PathVariable Long id) {
-        FederativeUnit federativeUnit = federativeUnitRepository.search(id);
+        FederativeUnit federativeUnit = federativeUnitService.search(id);
 
         if (federativeUnit != null) {
             return ResponseEntity.ok(federativeUnit);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<FederativeUnit> save(@RequestBody FederativeUnit federativeUnit) {
+        return new ResponseEntity<>(federativeUnitService.save(federativeUnit), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<FederativeUnit> replace(@PathVariable Long id, @RequestBody FederativeUnit federativeUnit) {
+        FederativeUnit search = federativeUnitService.search(id);
+
+        if (search != null) {
+            BeanUtils.copyProperties(federativeUnit, search, "id");
+            federativeUnitService.save(search);
+            return ResponseEntity.ok(search);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        try {
+            federativeUnitService.remove(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityInUseException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
