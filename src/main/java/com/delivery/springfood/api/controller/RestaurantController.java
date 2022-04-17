@@ -1,9 +1,9 @@
 package com.delivery.springfood.api.controller;
 
+import com.delivery.springfood.domain.exception.EntityNotFoundException;
 import com.delivery.springfood.domain.model.Restaurant;
 import com.delivery.springfood.domain.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.action.internal.EntityActionVetoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +36,7 @@ public class RestaurantController {
     public ResponseEntity<Restaurant> save(@RequestBody Restaurant restaurant) {
         try {
             return new ResponseEntity<>(restaurantService.save(restaurant), HttpStatus.CREATED);
-        } catch (EntityActionVetoException e) {
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().build();
         }
     }
