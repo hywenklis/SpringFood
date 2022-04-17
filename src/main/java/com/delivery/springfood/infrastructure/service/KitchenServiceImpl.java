@@ -30,8 +30,7 @@ public class KitchenServiceImpl implements KitchenService {
 
     @Override
     public Kitchen save(final Kitchen kitchen) {
-        Kitchen search = kitchenRepository.search(kitchen.getId());
-        return kitchenRepository.save(search);
+        return kitchenRepository.save(kitchen);
     }
 
     @Override
