@@ -7,9 +7,9 @@ import java.util.List;
 public interface FederativeUnitRepository {
     List<FederativeUnit> listAll();
 
-    FederativeUnit search(final Long id);
+    FederativeUnit search(Long id);
 
-    FederativeUnit save(final FederativeUnit federativeUnit);
+    FederativeUnit save(FederativeUnit federativeUnit);
 
-    String remove(final FederativeUnit federativeUnit);
+    void remove(Long id);
 }

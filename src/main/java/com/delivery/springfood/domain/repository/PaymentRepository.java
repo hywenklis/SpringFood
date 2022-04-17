@@ -8,9 +8,9 @@ public interface PaymentRepository {
     
     List<Payment> listAll();
 
-    Payment search(final Long id);
+    Payment search(Long id);
 
-    Payment save(final Payment payment);
+    Payment save(Payment payment);
 
-    String remove(final Payment payment);
+    void remove(Long id);
 }

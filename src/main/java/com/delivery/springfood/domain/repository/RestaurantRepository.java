@@ -8,9 +8,9 @@ public interface RestaurantRepository {
 
     List<Restaurant> listAll();
 
-    Restaurant search(final Long id);
+    Restaurant search(Long id);
 
-    Restaurant save(final Restaurant restaurant);
+    Restaurant save(Restaurant restaurant);
 
-    String remove(final Restaurant restaurant);
+    void remove(Long id);
 }

@@ -3,6 +3,7 @@ package com.delivery.springfood.infrastructure.repository;
 import com.delivery.springfood.domain.model.Payment;
 import com.delivery.springfood.domain.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -29,15 +30,17 @@ public class PaymentRepositoryImpl implements PaymentRepository {
     }
 
     @Override
-    public Payment search(final Long id) {
-        return entityManager.find(Payment.class, id);
+    public void remove(Long id) {
+        Payment payment = search(id);
+
+        if (payment == null) {
+            throw new EmptyResultDataAccessException(1);
+        }
+        entityManager.remove(payment);
     }
 
     @Override
-    @Transactional
-    public String remove(Payment payment) {
-        payment = search(payment.getId());
-        entityManager.remove(payment);
-        return payment.getFormatPayment();
+    public Payment search(final Long id) {
+        return entityManager.find(Payment.class, id);
     }
 }

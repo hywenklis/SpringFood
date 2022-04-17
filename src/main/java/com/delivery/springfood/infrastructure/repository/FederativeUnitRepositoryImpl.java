@@ -3,6 +3,7 @@ package com.delivery.springfood.infrastructure.repository;
 import com.delivery.springfood.domain.model.FederativeUnit;
 import com.delivery.springfood.domain.repository.FederativeUnitRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -30,9 +31,13 @@ public class FederativeUnitRepositoryImpl implements FederativeUnitRepository {
     }
 
     @Override
-    public String remove(FederativeUnit federativeUnit) {
-        federativeUnit = search(federativeUnit.getId());
+    public void remove(Long id) {
+        FederativeUnit federativeUnit = search(id);
+
+        if (federativeUnit == null) {
+            throw new EmptyResultDataAccessException(1);
+        }
         entityManager.remove(federativeUnit);
-        return federativeUnit.getName();
     }
+
 }
