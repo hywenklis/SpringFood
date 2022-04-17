@@ -5,12 +5,17 @@ INSERT INTO restaurant (name, freight_rate, kitchen_id) VALUES ('Thai Gourmet', 
 INSERT INTO restaurant (name, freight_rate, kitchen_id) VALUES ('Thai Delivey', 9.50, 1);
 INSERT INTO restaurant (name, freight_rate, kitchen_id) VALUES ('Tuk Tuk Comida Indiana', 15, 2);
 
-INSERT INTO payment (format_payment) VALUES ('DÉBITO')
-INSERT INTO payment (format_payment) VALUES ('CRÉDITO')
-INSERT INTO payment (format_payment) VALUES ('PIX')
-INSERT INTO payment (format_payment) VALUES ('BOLETO BANCÁRIO')
+INSERT INTO payment (format_payment) VALUES ('DÉBITO');
+INSERT INTO payment (format_payment) VALUES ('CRÉDITO');
+INSERT INTO payment (format_payment) VALUES ('PIX');
+INSERT INTO payment (format_payment) VALUES ('BOLETO BANCÁRIO');
 
-INSERT INTO federative_unit (name) VALUES ('ALAGOAS')
-INSERT INTO federative_unit (name) VALUES ('SÃO PAULO')
-INSERT INTO federative_unit (name) VALUES ('RIO GRANDE DO NORTE')
-INSERT INTO federative_unit (name) VALUES ('RIO DE JANEIRO')
+INSERT INTO federative_unit (name) VALUES ('ALAGOAS');
+INSERT INTO federative_unit (name) VALUES ('SÃO PAULO');
+INSERT INTO federative_unit (name) VALUES ('RIO GRANDE DO NORTE');
+INSERT INTO federative_unit (name) VALUES ('RIO DE JANEIRO');
+
+INSERT INTO city (name, federative_unit_id) VALUE ('MACEIÓ', 1);
+INSERT INTO city (name, federative_unit_id) VALUE ('GUARULHOS', 2);
+INSERT INTO city (name, federative_unit_id) VALUE ('NATAL', 3);
+INSERT INTO city (name, federative_unit_id) VALUE ('NITERÓI', 4);

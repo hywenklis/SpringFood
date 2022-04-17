@@ -1,5 +1,0 @@
-###
-GET http://localhost:8080/api/kitchens
-
-###
-GET http://localhost:8080/api/states
