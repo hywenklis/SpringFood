@@ -24,13 +24,14 @@ public class KitchenServiceImpl implements KitchenService {
     }
 
     @Override
-    public Kitchen search(Long id) {
+    public Kitchen search(final Long id) {
         return kitchenRepository.search(id);
     }
 
     @Override
     public Kitchen save(final Kitchen kitchen) {
-        return kitchenRepository.save(kitchen);
+        Kitchen search = kitchenRepository.search(kitchen.getId());
+        return kitchenRepository.save(search);
     }
 
     @Override
