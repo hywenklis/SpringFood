@@ -3,7 +3,6 @@ name: Sonar scan job
 jobs:
   # Excutando SonarCloud
   sonar:
-    needs: tests
     name: SonarCloud Analysis
     runs-on: ubuntu-latest
     steps:
