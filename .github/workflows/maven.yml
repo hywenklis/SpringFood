@@ -6,7 +6,6 @@ name: Java CI with Maven - Build, Test and Deploy
 # configuramos para rodar apenas quando houver um push na master
 on:
   push:
-    branches: [ main ]
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
