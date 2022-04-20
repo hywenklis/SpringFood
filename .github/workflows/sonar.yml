@@ -1,4 +1,13 @@
-on: push
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+    branches:
+      - master
+      - develop
+      - release/*
+      - hotfix/*
 name: Sonar scan job
 jobs:
   # Excutando SonarCloud
