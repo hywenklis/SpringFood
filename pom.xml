@@ -13,11 +13,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>springfood-api</name>
     <description>API de delivery de comida</description>
-    <properties>
-        <java.version>17</java.version>
-        <sonar.organization>hywenklis</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    </properties>
 
     <dependencies>
         <dependency>
