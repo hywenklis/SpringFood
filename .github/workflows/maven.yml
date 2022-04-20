@@ -18,20 +18,11 @@ jobs:
           ref: ${{ github.HEAD_REF }}
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
-        with:
-          projectBaseDir: my-custom-directory
-          args: >
-            -Dsonar.organization=hywenklis
-            -Dsonar.projectKey=hywenklis_SpringFood
-            -Dsonar.python.coverage.reportPaths=coverage.xml
-            -Dsonar.sources=lib/
-            -Dsonar.test.exclusions=tests/**
-            -Dsonar.tests=tests/
-            -Dsonar.verbose=true
+      - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=hywenklis_SpringFood
       - run: mkdir coverage-report && cp -r target/site/jacoco/* coverage-report
       - name: Publish Test Report
         if: ${{ always() }}
