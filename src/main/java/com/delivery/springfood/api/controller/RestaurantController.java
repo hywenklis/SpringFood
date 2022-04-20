@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/restaurants")
@@ -65,5 +66,18 @@ public class RestaurantController {
             return ResponseEntity.ok(search);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
+        Restaurant restaurant = restaurantService.search(id);
+
+        if (restaurant == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        restaurantService.merge(fields, restaurant);
+
+        return replace(id, restaurant);
     }
 }

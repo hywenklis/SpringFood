@@ -9,6 +9,11 @@ on:
     branches: [ main ]
   pull_request:
     types: [opened, synchronize, reopened]
+    branches:
+      - master
+      - develop
+      - release/*
+      - hotfix/*
 jobs:
   # `build` é o nome do job
   tests:

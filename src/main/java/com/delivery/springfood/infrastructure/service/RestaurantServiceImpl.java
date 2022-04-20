@@ -13,6 +13,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -53,5 +54,12 @@ public class RestaurantServiceImpl implements RestaurantService {
         } catch (DataIntegrityViolationException d) {
             throw new EntityInUseException(String.format("Restaurante de código %d não pode ser removido pois está em uso!", id));
         }
+    }
+
+    @Override
+    public void merge(Map<String, Object> originFields, Restaurant restaurant) {
+        originFields.forEach((nameProperties, valueProperties) -> {
+            System.out.println(nameProperties + " = " + valueProperties);
+        });
     }
 }
