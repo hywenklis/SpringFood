@@ -7,11 +7,14 @@ import com.delivery.springfood.domain.model.Restaurant;
 import com.delivery.springfood.domain.repository.KitchenRepository;
 import com.delivery.springfood.domain.repository.RestaurantRepository;
 import com.delivery.springfood.domain.service.RestaurantService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
@@ -58,8 +61,13 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public void merge(Map<String, Object> originFields, Restaurant restaurant) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Restaurant restaurantOrigin = objectMapper.convertValue(originFields, Restaurant.class);
         originFields.forEach((nameProperties, valueProperties) -> {
-            System.out.println(nameProperties + " = " + valueProperties);
+            Field field = ReflectionUtils.findField(Restaurant.class, nameProperties);
+            field.setAccessible(true);
+            Object newValue = ReflectionUtils.getField(field, restaurantOrigin);
+            ReflectionUtils.setField(field, restaurant, newValue);
         });
     }
 }
