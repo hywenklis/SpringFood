@@ -143,6 +143,21 @@ jobs:
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1
+      # aqui criamos a pasta para armazenar o relatório dos testes
+      - run: mkdir coverage-report && cp -r target/site/jacoco/* coverage-report
+
+      # aqui utilizamos um action para registrar o resultado do teste no nosso workflow,
+      # caso ocorra alguma falha em algum teste, ficará explicito nos logs de execução aba Actions
+      - name: Publish Test Report
+        if: ${{ always() }}
+        uses: scacap/action-surefire-report@v1
+
+      # aqui utilizamos um action para fazer a publicação do relatório de testes,
+      # esse relatório pode ser baixado nos detalhes de execução do workflow
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Test Coverage Report
+          path: coverage-report
 
   #Build's job
   build:
@@ -181,19 +196,3 @@ jobs:
           name: artifact
           #From this path
           path: target/springfood-api-0.0.1-SNAPSHOT.jar
-
-      # aqui criamos a pasta para armazenar o relatório dos testes
-      - run: mkdir coverage-report && cp -r target/site/jacoco/* coverage-report
-
-      # aqui utilizamos um action para registrar o resultado do teste no nosso workflow,
-      # caso ocorra alguma falha em algum teste, ficará explicito nos logs de execução aba Actions
-      - name: Publish Test Report
-        if: ${{ always() }}
-        uses: scacap/action-surefire-report@v1
-
-      # aqui utilizamos um action para fazer a publicação do relatório de testes,
-      # esse relatório pode ser baixado nos detalhes de execução do workflow
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Test Coverage Report
-          path: coverage-report
