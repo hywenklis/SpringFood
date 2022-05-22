@@ -46,11 +46,10 @@ jobs:
           distribution: 'adopt'
           java-version: 17
       - name: h2
-        run: |
+        run: | 
         cd h2
         echo $JAVA_OPTS
         export JAVA_OPTS=-Xmx512m
-        ./build.sh jar testCI
       - name: Cache SonarCloud packages
         uses: actions/cache@v2
         with:
