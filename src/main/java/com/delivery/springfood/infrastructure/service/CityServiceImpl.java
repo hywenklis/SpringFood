@@ -20,12 +20,12 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public List<City> listAll() {
-        return cityRepository.listAll();
+        return cityRepository.findAll();
     }
 
     @Override
     public City search(final Long id) {
-        return cityRepository.search(id);
+        return cityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado!"));
     }
 
     @Override
@@ -36,7 +36,7 @@ public class CityServiceImpl implements CityService {
     @Override
     public void remove(final Long id) {
         try {
-            cityRepository.remove(id);
+            cityRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new EntityNotFoundException(String.format("Não existe um cadastro de cidade com código %d", id));
         } catch (DataIntegrityViolationException d) {

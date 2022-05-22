@@ -26,12 +26,7 @@ public class CityController {
 
     @GetMapping("/{id}")
     public ResponseEntity<City> search(@PathVariable Long id) {
-        City city = cityService.search(id);
-
-        if (city != null) {
-            return ResponseEntity.ok(city);
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(cityService.search(id));
     }
 
     @PostMapping

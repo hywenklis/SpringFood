@@ -19,12 +19,12 @@ public class FederativeUnitServiceImpl implements FederativeUnitService {
 
     @Override
     public List<FederativeUnit> listAll() {
-        return federativeUnitRepository.listAll();
+        return federativeUnitRepository.findAll();
     }
 
     @Override
     public FederativeUnit search(final Long id) {
-        return federativeUnitRepository.search(id);
+        return federativeUnitRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado!"));
     }
 
     @Override
@@ -35,7 +35,7 @@ public class FederativeUnitServiceImpl implements FederativeUnitService {
     @Override
     public void remove(final Long id) {
         try {
-            federativeUnitRepository.remove(id);
+            federativeUnitRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new EntityNotFoundException(String.format("Não existe um cadastro de Estado com código %d", id));
         } catch (DataIntegrityViolationException d) {

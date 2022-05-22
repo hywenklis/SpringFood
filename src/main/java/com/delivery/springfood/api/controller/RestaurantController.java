@@ -27,12 +27,7 @@ public class RestaurantController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Restaurant> search(@PathVariable Long id) {
-        Restaurant restaurant = restaurantService.search(id);
-
-        if (restaurant != null) {
-            return ResponseEntity.ok(restaurant);
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(restaurantService.search(id));
     }
 
     @PostMapping

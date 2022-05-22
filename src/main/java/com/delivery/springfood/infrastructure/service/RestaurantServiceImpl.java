@@ -28,22 +28,18 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public List<Restaurant> listAll() {
-        return restaurantRepository.listAll();
+        return restaurantRepository.findAll();
     }
 
     @Override
     public Restaurant search(final Long id) {
-        return restaurantRepository.search(id);
+        return restaurantRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado!"));
     }
 
     @Override
     public Restaurant save(final Restaurant restaurant) {
         Long id = restaurant.getKitchen().getId();
-        Kitchen kitchen = kitchenRepository.search(id);
-
-        if (kitchen == null) {
-            throw new EntityNotFoundException(String.format("Não existe cadastro de cozinha com o código %d ", id));
-        }
+        Kitchen kitchen = kitchenRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado!"));
         restaurant.setKitchen(kitchen);
         return restaurantRepository.save(restaurant);
     }
@@ -51,7 +47,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public void remove(final Long id) {
         try {
-            restaurantRepository.remove(id);
+            restaurantRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new EntityNotFoundException(String.format("Não existe um cadastro de restaurante com código %d", id));
         } catch (DataIntegrityViolationException d) {

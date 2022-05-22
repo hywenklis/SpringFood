@@ -20,12 +20,12 @@ public class KitchenServiceImpl implements KitchenService {
 
     @Override
     public List<Kitchen> listAll() {
-        return kitchenRepository.listAll();
+        return kitchenRepository.findAll();
     }
 
     @Override
     public Kitchen search(final Long id) {
-        return kitchenRepository.search(id);
+        return kitchenRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não encontrado!"));
     }
 
     @Override
@@ -36,7 +36,7 @@ public class KitchenServiceImpl implements KitchenService {
     @Override
     public void remove(final Long id) {
         try {
-            kitchenRepository.remove(id);
+            kitchenRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new EntityNotFoundException(String.format("Não existe um cadastro de cozinha com código %d", id));
         } catch (DataIntegrityViolationException d) {
