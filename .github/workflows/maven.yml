@@ -10,35 +10,34 @@ on:
       - release/*
       - hotfix/*
 jobs:
-  tests:
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: 17
-      - name: Cache Maven packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Docker compose
-        run: docker-compose up -d
-      - name: Maven Test
-        run: mvn test
+  #  tests:
+  #    name: Test
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - uses: actions/checkout@v3
+  #        with:
+  #          fetch-depth: 0
+  #      - name: Set up JDK 17
+  #        uses: actions/setup-java@v2
+  #        with:
+  #          distribution: 'adopt'
+  #          java-version: 17
+  #      - name: Cache Maven packages
+  #        uses: actions/cache@v2
+  #        with:
+  #          path: ~/.m2
+  #          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+  #          restore-keys: ${{ runner.os }}-m2
+  #
+  #      - name: Maven Test
+  #        run: mvn test
 
   sonar:
-    needs: tests
+    #    needs: tests
     name: SonarCloud Analysis
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@3
         with:
           fetch-depth: 0
       - name: Set up JDK 17
@@ -46,8 +45,12 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: 17
-      - name: Docker compose
-        run: docker-compose up -d
+      - name: h2
+        run: |
+        cd h2
+        echo $JAVA_OPTS
+        export JAVA_OPTS=-Xmx512m
+        ./build.sh jar testCI
       - name: Cache SonarCloud packages
         uses: actions/cache@v2
         with:
@@ -70,20 +73,11 @@ jobs:
     needs: sonar
     name: Analyze
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [ 'java' ]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 2
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: 17
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
@@ -94,29 +88,29 @@ jobs:
         uses: github/codeql-action/analyze@v2
 
 
-  build:
-    needs: analyze
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: 17
-      - name: Cache Maven packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Build with Maven
-        run: mvn -B package -DskipTests --file pom.xml
-      - name: Upload JAR
-        uses: actions/upload-artifact@v3
-        with:
-          name: artifact
-          path: target/springfood-api-0.0.1-SNAPSHOT.jar
+#  build:
+#    needs: analyze
+#    name: Build
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@3
+#        with:
+#          fetch-depth: 0
+#      - name: Set up JDK 17
+#        uses: actions/setup-java@v2
+#        with:
+#          distribution: 'adopt'
+#          java-version: 17
+#      - name: Cache Maven packages
+#        uses: actions/cache@v2
+#        with:
+#          path: ~/.m2
+#          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+#          restore-keys: ${{ runner.os }}-m2
+#      - name: Build with Maven
+#        run: mvn -B package -DskipTests --file pom.xml
+#      - name: Upload JAR
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: artifact
+#          path: target/springfood-api-0.0.1-SNAPSHOT.jar
