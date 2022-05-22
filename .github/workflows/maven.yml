@@ -36,7 +36,7 @@ jobs:
     name: SonarCloud Analysis
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@2
+      - uses: actions/checkout@1
         with:
           fetch-depth: 0
       - name: Set up JDK 17
