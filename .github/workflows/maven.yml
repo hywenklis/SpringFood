@@ -14,7 +14,7 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 0
       - name: Set up JDK 17
@@ -36,7 +36,7 @@ jobs:
     name: SonarCloud Analysis
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@1
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 0
       - name: Set up JDK 17
@@ -50,12 +50,6 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
-      - name: Cache Maven packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -68,42 +62,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         with:
           fetch-depth: 2
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: ${{ matrix.language }}
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v2
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
-
-
-  build:
-    needs: analyze
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@3
-        with:
-          fetch-depth: 0
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
           java-version: 17
-      - name: Cache Maven packages
-        uses: actions/cache@v2
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
         with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
-      - name: Build with Maven
-        run: mvn -B package -DskipTests --file pom.xml
-      - name: Upload JAR
-        uses: actions/upload-artifact@v3
-        with:
-          name: artifact
-          path: target/springfood-api-0.0.1-SNAPSHOT.jar
+          languages: ${{ matrix.language }}
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v1
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
