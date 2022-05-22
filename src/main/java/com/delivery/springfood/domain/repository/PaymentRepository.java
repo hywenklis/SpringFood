@@ -1,16 +1,9 @@
 package com.delivery.springfood.domain.repository;
 
 import com.delivery.springfood.domain.model.Payment;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-public interface PaymentRepository {
-    
-    List<Payment> listAll();
-
-    Payment search(Long id);
-
-    Payment save(Payment payment);
-
-    void remove(Long id);
+@Repository
+public interface PaymentRepository extends JpaRepository<Payment, Long> {
 }

@@ -1,15 +1,9 @@
 package com.delivery.springfood.domain.repository;
 
 import com.delivery.springfood.domain.model.FederativeUnit;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-public interface FederativeUnitRepository {
-    List<FederativeUnit> listAll();
-
-    FederativeUnit search(Long id);
-
-    FederativeUnit save(FederativeUnit federativeUnit);
-
-    void remove(Long id);
+@Repository
+public interface FederativeUnitRepository extends JpaRepository<FederativeUnit, Long> {
 }

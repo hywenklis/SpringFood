@@ -1,16 +1,7 @@
 package com.delivery.springfood.domain.repository;
 
 import com.delivery.springfood.domain.model.Restaurant;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
-public interface RestaurantRepository {
-
-    List<Restaurant> listAll();
-
-    Restaurant search(Long id);
-
-    Restaurant save(Restaurant restaurant);
-
-    void remove(Long id);
+public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 }
